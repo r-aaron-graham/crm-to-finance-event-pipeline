@@ -4,12 +4,8 @@ from __future__ import annotations
 
 import asyncio
 
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-
-from crm_to_finance_event_pipeline import events, pipeline  # type: ignore
+import events
+import pipeline
 
 
 def test_mapping_and_idempotency() -> None:
