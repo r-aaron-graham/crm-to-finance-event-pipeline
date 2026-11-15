@@ -36,3 +36,16 @@ In a real integration you would replace the mock CRM consumer and finance writer
 implementations that connect to actual services (e.g. via webhooks, message queues, or
 REST APIs).  The mapping logic in `pipeline.py` can be extended to handle additional
 event types and perform validations.
+
+## Deployment verification
+
+Use Python 3.12 on Linux. CI and Docker apply the checked-in dependency constraints.
+
+```sh
+python -m pip install -c requirements.lock -r requirements-dev.txt
+python -m pytest -q
+docker build -t reviewer-smoke .
+docker run --rm reviewer-smoke
+```
+
+Expected result: three ledger entries, including one payment. The duplicate invoice event is skipped. The ledger and deduplication state are process-local.
